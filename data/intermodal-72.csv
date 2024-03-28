@@ -1,0 +1,139 @@
+﻿id,lat,lon,type,description
+1,40.67207207,-74.07683509,H,port of New Jersey
+2,40.68485579,-74.00869991,H,port of New York
+3,40.67349348,-74.15497108,H,port of Newark
+4,29.60923117,-95.00737638,H,port of Houston
+5,33.75860489,-118.2127977,H,port of Long Beach
+6,33.73531463,-118.2552421,H,port of Los Angeles
+7,32.84007116,-79.9367473,H,port of Charleston
+8,32.12201827,-81.13844044,H,port of Savannah
+9,30.71714525,-88.04401243,H,port of Mobile
+10,29.91253381,-90.11318014,H,port of New Orleans
+11,27.82598395,-97.44192682,H,port of Corpus Christi
+12,30.07923188,-94.08854623,H,port of Beaumont
+13,47.59516693,-122.3389754,H,port of Seattle
+14,37.80909116,-122.3286913,H,port of Oakland
+15,36.91007314,-76.32435726,H,port of Hampton Roads
+16,25.76897451,-80.15705022,H,port of Miami
+17,42.34065527,-71.02298692,H,port of Boston
+18,39.25702626,-76.54660955,H,port of Baltimore
+19,27.86273702,-82.54107259,H,port of Tempa Bay
+20,39.98247391,-75.08077527,H,port of Philadelphia
+,,,,
+,42.70602616,-73.7173574,H,Albany FedEx Ship Center
+,37.64687177,-77.40132576,H,Richmond FedEx Ship Center
+,35.1930922,-80.79336898,H,Charlotte FedEx Ship Center
+,33.74349457,-84.39895018,H,Atlanta FedEx Ship Center
+,28.55804841,-81.33472615,H,Orlando FedEx Ship Center
+,41.41510711,-81.50342906,H,Cleveland FedEx Ship Center
+,40.45970099,-79.96707093,H,Pittsburgh FedEx Ship Center
+,40.01863272,-82.92038232,H,Columbus FedEx Ship Center
+,38.40762036,-81.8075002,H,Charleston FedEx Ground
+,42.37355567,-83.4209303,H,Detroit FedEx Ground
+,39.80033674,-86.09926586,H,Indianapolis FedEx Ground
+,38.32869992,-85.67766748,H,Louisville FedEx Ground
+,36.23856933,-86.79403252,H,Nashville FedEx Ground
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+21,47.56199636,-122.3317972,R,Seattle
+22,47.26102055,-122.4097954,R,Tacoma
+23,45.48951046,-122.6438036,R,Portland
+24,37.80122645,-122.2988075,R,Oakland
+25,37.84338736,-121.2637056,R,Lathrop
+26,34.00965519,-118.1795442,R,Los Angeles
+27,34.06036923,-118.221046,R,LATC
+28,34.01053926,-117.9395941,R,City of Industry
+29,33.81603704,-118.2247545,R,ICTF
+30,34.06694049,-117.4169285,R,Inland Empire
+31,39.53161045,-119.7552989,R,Sparks
+32,36.27263998,-115.0684047,R,Las Vegas
+33,40.75174614,-112.0112575,R,Salt Lake City
+34,33.4439923,-112.054696,R,Phoenix
+35,32.12289651,-110.8460097,R,Tucson
+36,39.77525166,-104.9641739,R,Denver
+37,"31.909094626155575, ",-106.7520165,R,Santa Teresa
+38,44.97830213,-93.21377162,R,Twin Cities
+39,"41.23518117928084, ",-95.83754158,R,Council Bluffs
+40,39.12402542,-94.52295317,R,Kansas City
+41,32.78350074,-96.66134575,R,Mesquite
+42,32.61877923,-96.69799637,R,Wilmer
+43,29.31047014,-98.64064978,R,San Antonio
+44,27.66560153,-99.44681379,R,Laredo
+45,29.82103205,-95.28989528,R,Settegast
+46,41.89579221,-87.90211213,R,Northlake
+47,41.46763378,-88.10900734,R,Joliet
+48,41.62808064,-87.61318592,R,Dolton
+49,38.51570656,-90.21331323,R,St. Louis
+50,35.19681021,-90.26403883,R,Marion
+51,29.91728109,-90.20128564,R,New Orleans
+52,44.94474061,-93.07947675,W,port of Saint Paul
+53,42.50701231,-90.65205799,W,port of Dubuque
+54,38.65199404,-90.18323876,W,port of St. Louis
+55,30.05709606,-90.5642078,W,port of South Louisiana
+56,35.0816601,-90.13195821,W,port of Memphis
+57,36.22981524,-95.73159724,W,port of Tulsa
+58,41.72935867,-87.53323342,W,port of Chicago
+59,40.48063557,-80.05725305,W,port of Pittsburgh
+60,39.41602324,-81.45414012,W,Mid-Ohio Valley port
+61,38.40862119,-82.58626527,W,port of Huntington Tri-State
+62,39.09612487,-84.53047706,W,port of Cincinnati
+63,37.06849412,-88.58146197,W,port of Paducah
+64,35.94861212,-83.84013829,W,Knoxville
+65,"36.15838530606099, ",-86.75214305,W,port of Nashiville
+66,34.65579195,-87.07190808,W,port of Decatur
+67,41.23672863,-95.90633421,W,Omaha
+68,39.11087704,-94.60619542,W,port of Kansas City
+69,32.38901161,-90.88560137,W,port of Vicksburg
+70,30.71714525,-88.04401243,W,port of Mobile
+71,30.43463774,-91.20296424,W,port of Greater Baton Rouge
+72,32.36213432,-93.62914492,W,Shreveport

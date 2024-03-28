@@ -1,0 +1,211 @@
+% Begin
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[top=1in, bottom=1in, left = 1in, right = 1in]{geometry}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{anysize}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{comment}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage[font=normal]{caption}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage{pdflscape}
+\usepackage{bm}
+\usepackage[linesnumbered, ruled]{algorithm2e}
+\usepackage[
+	backend=biber,
+	maxcitenames=2,
+	maxbibnames=10,
+	citestyle=authoryear,
+	bibstyle=authoryear,
+	isbn=false,
+	url=false,
+	doi=false]{biblatex}
+\renewbibmacro{in:}{}
+\captionsetup[subfigure]{labelformat=empty}
+
+% fonts
+\usepackage{kpfonts}
+
+% Bib file
+\addbibresource{bibfile.bib}
+
+% Paper style
+\geometry{a4paper}
+
+% Equation (section.equation)
+\numberwithin{equation}{section}
+
+% Math
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+%\newtheorem{proposition}{Proposition}[section]
+%\newtheorem{lemma}{Lemma}[section]
+%\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{corollary}{Corollary}[section]
+\newtheorem{assumption}{Assumption}[section]
+
+% Title
+\title{TITLE}
+\author{NAME}
+\date{}
+
+% Begin Document
+\begin{document}
+
+%MakeTitle
+\maketitle
+
+%Introduction
+\section{SECTION}
+
+	\paragraph{}PARAGRAPH
+
+%Introduction
+\section{Model}
+
+	We define highway, railway and waterway networks as directed graphs $G^H(V, A^H)$, $G^R(V^R, A^R)$, and $G^W(V^W, A^W)$, where $V$, $V^R$ and $V^H$ are the sets of nodes in the network and $A^H$, $A^R$, and $A^W$ represent the physical highway, railway, and inland waterway systems in the U.S. We let $V=V^H\cup V^R\cup V^W$, where $V^H$ is the set of warehouses and international harbors that are used as origins and destinations of cargo transportation. As such, the highway network $G^H$ connects all nodes in the railway and waterway networks as well.
+	
+	Due to the large volume of containers transported every day, we group individual containers by defining an order $p\in\mathcal{P}$, where $\mathcal{P}$ is the set of all orders that require transportation. An order $p$ is a tuple $(p_o, p_d, p_v, p_w, p_T)$, including the origin $p_o$, the destination $p_d$, the volume $p_v$, i.e., the number of containers, the total weight $p_w$, and the due time at destination $p_T$. An order is always transported together in the multimodal network, featuring large shipments that share the same origin and destination. This allows us to eliminate unnecessary variables in the system, so larger instances are solvable through contemporary hardware. Moreover, if an additional assumption is made that containers with the same origin and destination are always grouped in the same order, we are able to control the scale of the problem as there will be at most $|V^H|(|V_H| - 1)$ orders.
+	
+	Transportation vehicles and vessels considered in our model include heavy duty vehicles, i.e., truck, locomotives, and barge ships. Since intermodal transportation requires one truck chassis per container, an order of volume $p_v$ requires $p_v$ truck on the highway. This also allows us to consider advances transportation techniques such as platooning, which is a proven way to reduce carbon emissions \parencite{XXX}. We use $\mathcal{L}=\{1, \dots, L\}$ and $\mathcal{B}=\{1, \dots, B\}$ as the fleets of locomotives and barges. In the following, we use the word ``vehicle" to refer to both locomotives and barge ships. To avoid repetition, we denote vehicles by $m\in \mathcal{V}^M$, $M\in \{R, W\}$, where $\mathcal{V}^R=\mathcal{L}$ and $\mathcal{V}^W=\mathcal{B}$, with carrying capacities of $C^R$ and $C^W$ containers, respectively. Each vehicle will depart from a ``virtual" hub $h^R$ and $h^W$ and visit several locations. The virtual hub is added to facilitate vehicle routing. Since the focus of our model is cargo transportation instead of vehicle scheduling, we do not consider empty hauling after completing the route.
+	
+	Travel times $\tau^H_{i, j}$, $\tau^R_{i, j}$, and $\tau^W_{i, j}$ are decided by the distances $\omega^H_{i, j}$, $\omega^R_{i, j}$, and $\omega^W_{i, j}$ of network arcs $(i, j)$ in $A^H$, $A^R$, and $A^W$, and the vehicle speed. We also consider transshipment and sorting times $\delta^R$ and $\delta^W$ at railway or waterway stations. Transshipment happens between two or more vehicles in the same mode, since intermodal model rail and port facilities are typically separate, and requires, however short, road transportations between them.
+	
+	We include three types of costs in the model: operational costs, late cost, and GHG emission cost. We consider highway transportation cost $c^H$ $(\$/\text{h})$ as the hourly salary for truckers, the railway transportation as a fixed leasing cost per locomotive $c^R$ $(\$/\text{locomotive})$, and the waterway transportation as a fixed leasing cost per barge and tugboat $c^W$ $(\$/\text{ship})$. The late penalty cost is denoted by $c^P$ $(\$/\text{h})$ per container. For GHG emissions, we calculate the $\text{CO}_2$ equivalent of all GHG emissions and charge a carbon tax rate as the cost. We use $\sigma^H$ $(\$/\text{mile})$, $\sigma^R$ $(\$/\text{ton mile})$, and $\sigma^W$ $(\$/\text{ton mile})$ for the highway, railway, and waterway GHG emissions costs, respectively. Highway emissions adopt the unit $\$/\text{mile}$ as it is less sensitive to cargo weight than railway and waterway transportations \parencite{XXX}.
+	
+	The primary decisions include the flows of orders and the flows of vehicle in the layered intermodal networks. First, let $x^H_{p, i, j}\in\{0, 1\}$ be the order flow variables on the highway, where $x^H_{p, i, j}=1$ if order $p$ is transported on arc $(i,j)\in A^H$ using highway. Let $x^M_{p, m, i, j}\in\{0, 1\}$ be the order flow variables on the railway and waterway, where $x^M_{p, m, i, j}=1$ if order $p$ is transported on arc $(i, j)\in A^M$ by mode $M\in\{R, W\}$ using vehicle $m\in\mathcal{V}^M$. Then, let $y^M_{m, i, j}\in\{0, 1\}$ be the vehicle routing variables, where $y^M_{m, i, j}=1$ if vehicle $m\in\mathcal{V}^M$ is routed through arc $(i, j)\in A^M$, $M\in\{R, W\}$. We also define $z^M_{m, i}\in\mathbb{Z}_+$ as the sequence of visit for vehicle $m\in\mathcal{V}^M$,  $M\in\{R, W\}$ to eliminate subtours and $\psi^M_{m}\in\{0, 1\}$ to denote if a vehicle is used, $m\in\mathcal{V}^M$,  $M\in\{R, W\}$, to calculate the operational costs. Order transshipments are represented by variables $u^M_{p, m, n, i}\in\{0, 1\}$, where $u^M_{p, m, n, i}=1$ if order $p$ is transshipped from vehicle $m$ to $n$ at $i\in V^M$, $m, n\in\mathcal{V}^M$, $M\in\{R, W\}$.
+	
+	We also define time variables to properly schedule order flow, vehicle routing, and transshipments. Let $t^M_{m, i}\in\mathbb{R}_+$ and $s^M_{m, i}\in\mathbb{R}_+$ be the arrival and departure times of vehicle $m\in \mathcal{V}^M$ at $i\in V^M$, $M\in\{R, W\}$, respectively. Arrival time of $p$ at $i\in V$ is defined as $t_{p, i}\in\mathbb{R}_+$. The late time of $p$ at $i\in V$ is $T_{p}\in\mathbb{R}_+$.
+	
+	Due to the large size of the model, we describe the constraints in sections. First, we consider order flow constraints. All orders must leave the origin and arrive at the destination through the highway system. At each railway and waterway node, incoming and outgoing orders must be at balance. These results in the following constraints:
+	\begin{align}
+	&\sum_{i\in \{p_d\}\cup V^R\cup V^W}x^H_{p, p_o, i}=1\quad\forall\ p\in \mathcal{P}\label{eq:origin_1}\\
+	&\sum_{i\in \{p_o\}\cup V^R\cup V^W}x^H_{p, i, p_d}=1\quad\forall\ p\in \mathcal{P}\label{eq:destination_1}\\
+	&\sum_{\substack{m\in\mathcal{V}^M\\(i, j)\in A^M}}x^M_{p, m, i, j}+\sum_{i\in V^{\bar{M}}\cup\{p_o\}}x^H_{p, i, j}=\sum_{\substack{m\in\mathcal{V}^M\\(j, k)\in A^M}}x^M_{p, m, j, k}+\sum_{k\in V^{\bar{M}}\cup\{p_d\}}x^H_{p, j, k}\notag\\
+	&\text{\hspace{250pt}}\forall\ p\in \mathcal{P}, j\in V^M, M\in \{R, W\}\label{eq:order_balance}\\
+	&\sum_{\substack{m\in\mathcal{V}^M\\(j, k)\in A^M}}x^M_{p, m, j, k}+\sum_{k\in V^{\bar{M}}\cup\{p_d\}}x^H_{p, j, k}\le1\quad\forall\ p\in \mathcal{P}, j\in V^M, M\in \{R, W\}\label{eq:outgoing_1}
+	\end{align}
+	
+	Then, vehicle scheduling and routing are achieved via the constraints:
+	\begin{align}
+	&\sum_{i\in V^M, i\ne h^M}y^M_{m, h^M, i}\le1\quad\forall\ m\in \mathcal{V}^M, M\in \{R, W\}\label{eq:virtual_hub}\\
+	&\sum_{\substack{i\in V^M\cup \{h^M\},\\(i, j)\in A^M}}y^M_{m, i, j}\ge\sum_{\substack{k\in V^M,\\(j, k)\in A^M}}y^M_{m, j, k}\quad\forall\ m\in \mathcal{V}^M, j\in V^M, M\in \{R, W\}\label{eq:vehicle_balance}\\
+	&z_{m, i}-z_{m, j}+1\le |V^M|\cdot\big(1-y^M_{m, i, j}\big)\quad\forall\ (i, j)\in A^M, m\in \mathcal{V}^M, M\in \{R, W\}\label{eq:subtour_elimination}\\
+	&N\cdot \psi^M_m\ge\sum_{(i, j)\in A^M}y^M_{m, i, j}\quad\forall\ m\in\mathcal{V}^M, M\in\{R, W\}\label{eq:vehicle_number}
+	\end{align}
+	
+	Order flow and vehicle flow are couple through two constraints, making sure that all orders flowing through $G^R$ and $G^W$ are assigned to a vehicle, vehicle capacity limits are not exceeded, and there is no empty hauling in the network.
+	\begin{align}
+	&\sum_{p\in\mathcal{P}}p_v\cdot x^M_{p, m, i, j}\le C^M\cdot y^M_{m, i, j}\quad\forall\ m\in \mathcal{V}^M, (i, j)\in A^M, M\in\{R, W\}\label{eq:capacity}\\
+	&\sum_{p\in\mathcal{P}}x^M_{p, m, i, j}\ge y^M_{m, i, j}\quad\forall\ m\in \mathcal{V}^M, (i, j)\in A^M, M\in\{R, W\}\label{eq:empty_haul}
+	\end{align}
+	
+	Transshipment and sorting are scheduled through the following two constraints. The first constraint guarantees that transshipment happens if an order is exchanged by two vehicles in the same mode. The seconds constraint makes sure that a vehicle does not stop unnecessarily.
+	\begin{align}
+	&u^M_{p, m, n, j}\ge \Big( \sum_{(i, j)\in A^M}x^M_{p, m, i, j}+ \sum_{(j, k)\in A^M}x^M_{p, n, j, k}\Big)-\frac{3}{2}\notag\\
+	&\text{\hspace{150pt}}\forall\ p\in \mathcal{P}, j\in V^M, m, n\in\mathcal{V}^M, m\ne n, M\in\{R, W\}\label{eq:transshipment}\\
+	&u^M_{p, m, n, j}\le \frac{1}{2}\Big(\sum_{(i, j)\in A^M}x^M_{p, m, i, j}+ \sum_{(j, k)\in A^M}x^M_{p, n, j, k}\Big)\notag\\
+	&\text{\hspace{150pt}}\forall\ p\in \mathcal{P}, j\in V^M, m, n\in\mathcal{V}^M, m\ne n, M\in\{R, W\}\label{eq:unnecessary_stop}
+	\end{align}
+	
+	Finally, travel times, including vehicle arrival and departure times, order arrival times, and order late times, are calculated based on the scheduling of order and vehicle flows. The arrival time of a vehicle only depends on the departure time at the previous location. The departure time of a vehicle depends on the arrival of all orders from the highway and the transshipment and sorting time. The arrival time of an order depends on the mode of transportation. Note that we calculate the order arrival times at all node so that vehicle departure time is correct.
+	\begin{align}
+	&t^M_{m, j}\ge s^M_{m, i} + \tau^M_{i, j}-N\cdot (1-y^M_{m, i, j})\quad\forall\ m\in \mathcal{V}^M, (i, j)\in A^M, M\in\{R, W\}\label{eq:vehicle_arrival}\\
+	&s^M_{m, i}\ge t^M_{m, i}\quad\forall\ m\in \mathcal{V}^M, i\in A^M, M\in\{R, W\}\label{eq:arrival_departure}\\
+	&s^M_{m, j}\ge t_{p, i} + \tau^H_{i, j} - N\cdot(1-x^H_{p, i, j})\notag\\
+	&\text{\hspace{120pt}}\forall\ p\in\mathcal{P}, m\in\mathcal{V}^M, i\in \{p_o\}\cup V^{\bar{M}}, j\in V^M, M\in\{R, W\}\label{eq:vehicle_highway}\\
+	&s^M_{m, j}\ge t^M_{n, j} + \delta^M - N\cdot\big(1 - u^M_{p, m, n, j}\big)\quad\forall\ p\in\mathcal{P}, m, n\in\mathcal{V}^M, j\in V^M, M\in\{R, W\}\label{eq:transship_m_n}\\
+	&s^M_{n, j}\ge t^M_{m, j} + \delta^M - N\cdot\big(1 - u^M_{p, m, n, j}\big)\quad\forall\ p\in\mathcal{P}, m, n\in\mathcal{V}^M, j\in V^M, M\in\{R, W\}\label{eq:transship_n_m}\\
+	&t_{p, j}\ge t^M_{m, j} - N\cdot (1 - \sum_{(i, j)\in A^M}x^M_{p, m, i, j})\quad\forall\ p\in\mathcal{P}, m\in \mathcal{V}^M, j\in V^M, M\in\{R, W\}\label{eq:order_rail_water}\\
+	&t_{p, j}\ge t_{p, i} + \tau^H_{i, j} - N\cdot (1 - x^H_{p, i, j})\quad\forall\ p\in\mathcal{P}, (i,j)\in A^H, j\ne p_o\label{eq:order_highway}\\
+	&T_{p}\ge t_{p, p_d} - p_T\quad\forall\ p\in\mathcal{P}\label{eq:late_time}
+\end{align}
+
+	The objective is to minimize the total cost, including operational costs, late costs, and GHG emission costs. The entire mixed integer model is
+	\begin{align}
+	\min\quad &\sum_{\substack{p\in \mathcal{P}\\ (i, j)\in A^H}}c^H\tau^H_{i, j}p_v x^H_{p, i, j}+\sum_{\substack{m\in \mathcal{V}^M, \\M\in\{R, W\}}}c^M\psi^M_{m}+\sum_{p\in \mathcal{P}}c^P T_p\notag\\
+	&\text{\hspace{50pt}}+\sum_{\substack{p\in \mathcal{P}\\ (i, j)\in A^H}}\sigma^H\omega^H_{i, j}p_vx^H_{p, i, j}+\sum_{\substack{p\in \mathcal{P}, m\in \mathcal{V}^M\\ (i, j)\in A^M,M\in\{R, W\}}}\sigma^M\omega^M_{i, j}p_wx^M_{p, m, i, j}\label{eq:obj}\\
+	\text{s.t.}\quad & \eqref{eq:origin_1}-\eqref{eq:late_time},\notag\\
+	&x^H_{p, i, j}, x^M_{p, m, i, j}, y^M_{m, i, j}, \psi^M_{m}, u^M_{p, m, n, i}\in\{0, 1\}\notag\\
+	&\text{\hspace{50pt}}\forall\ p\in\mathcal{P},m, n\in\mathcal{V}^M,m\ne n, i\in V^M, (i,j)\in A^M, M\in\{R, W\}\\
+	&z^M_{m, i}\in\mathbb{Z}_+\quad \forall\ m\in\mathcal{V}^M,i\in V^M,M\in\{R, W\}\\
+	&t^M_{m, i}, s^M_{m, i}, t_{p, i}, T_{p}\in\mathbb{R}_+\quad \forall\ p\in\mathcal{P},m\in\mathcal{V}^M,i\in V^M,M\in\{R, W\}\label{eq:bound}
+	\end{align}
+
+
+\newpage
+
+% References
+\nocite{*}
+\printbibliography
+
+\newpage
+% Appendix
+\appendix
+
+\section*{Appendix I}
+	
+
+% Syntex
+\begin{comment}
+
+%Single Figure 
+	\begin{figure}[htbp]
+	\centering \includegraphics[width=0.5\textwidth]{}
+	\caption{}
+	\label{}
+	\end{figure}
+	
+%Multi-Figure
+	\begin{figure}[htpb]
+    	\centering
+	\begin{subfigure}[htpb]{0.5\textwidth}
+		\includegraphics[width=\textwidth]{}
+		\caption{}
+		\label{}
+	\end{subfigure}
+	\begin{subfigure}[htpb]{0.5\textwidth}
+		\includegraphics[width=\textwidth]{}
+		\caption{}
+		\label{}
+	\end{subfigure}
+	\caption{}
+	\label{}
+	\end{figure}
+
+%Table
+	\begin{table}[htbp]
+	\centering
+	\caption{}
+	\label{}
+	\begin{tabular}{cccccc}
+	\hline
+	&&&&&
+	\hline
+	\end{tabular}
+	\end{table}
+
+\end{comment}
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
